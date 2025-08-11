@@ -1,6 +1,9 @@
 #!/bin/bash
 set -xe -o pipefail
 
+echo "Disabling swap."
+swapoff -a
+
 if [ "$HOSTNAME" == "node-1" ]; then
   NODE_IP="192.168.60.201"
   ARGS_KUBEADM_INIT=""
