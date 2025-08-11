@@ -4,7 +4,7 @@ This is a collection of very simple and straight-forward scripts to deploy a kub
 I wrote the scripts while I was experimenting and learning about the kubeadm. So keep your expectations low about the quality :)
 
 This repo deploys a kubernetes cluster using the following technologies:
-- Vagrant
+- Vagrant (+ plugins: vagrant-share vagrant-libvirt)
 - kubeadm
 - flannel
 - containerd
