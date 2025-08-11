@@ -6,28 +6,28 @@ set -xe -o pipefail
 
 arch="amd64"
 
-containerd_version="1.6.35"
+containerd_version="2.1.4"
 containerd_url="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}-linux-${arch}.tar.gz"
 containerd_sum_url="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}-linux-${arch}.tar.gz.sha256sum"
 containerd_targz="containerd-${containerd_version}-linux-${arch}.tar.gz"
 
-runc_version="1.1.13"
+runc_version="1.3.0"
 runc_url="https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.${arch}"
 runc_binary="runc.${arch}"
 
-cni_version="1.5.1"
+cni_version="1.7.1"
 cni_url="https://github.com/containernetworking/plugins/releases/download/v${cni_version}/cni-plugins-linux-${arch}-v${cni_version}.tgz"
 cni_sum_url="https://github.com/containernetworking/plugins/releases/download/v${cni_version}/cni-plugins-linux-${arch}-v${cni_version}.tgz.sha256"
 cni_targz="cni-plugins-linux-${arch}-v${cni_version}.tgz"
 
-nerdctl_version="1.7.6"
+nerdctl_version="2.1.3"
 nerdctl_url="https://github.com/containerd/nerdctl/releases/download/v${nerdctl_version}/nerdctl-${nerdctl_version}-linux-${arch}.tar.gz"
 nerdctl_targz="nerdctl-${nerdctl_version}-linux-${arch}.tar.gz"
 
-install_containerd(){
-  if ! command -v containerd &> /dev/null; then 
+install_containerd() {
+  if ! command -v containerd &>/dev/null; then
     cd $(mktemp -d)
-    wget $containerd_url 
+    wget $containerd_url
     wget $containerd_sum_url
     sha256sum --check $containerd_targz.sha256sum
     tar Cxzvf /usr/local $containerd_targz
@@ -39,7 +39,7 @@ install_containerd(){
   fi
 
   mkdir -p /etc/containerd
-  containerd config default > /etc/containerd/config.toml
+  containerd config default >/etc/containerd/config.toml
   # Change the option under the [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
   # TODO: this should be a more accurate find and replace
   sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
@@ -49,8 +49,8 @@ install_containerd(){
 
 }
 
-install_runc(){
-  if ! command -v runc &> /dev/null; then
+install_runc() {
+  if ! command -v runc &>/dev/null; then
     cd $(mktemp -d)
     wget $runc_url
     install -m 755 ${runc_binary} /usr/local/sbin/runc
@@ -58,7 +58,7 @@ install_runc(){
   fi
 }
 
-install_cni(){
+install_cni() {
   if ! [ -d "/opt/cni/bin" ]; then
     cd $(mktemp -d)
     wget $cni_url
@@ -71,8 +71,8 @@ install_cni(){
   fi
 }
 
-install_nerdctl(){
-  if ! command -v nerdctl &> /dev/null; then
+install_nerdctl() {
+  if ! command -v nerdctl &>/dev/null; then
     cd $(mktemp -d)
     wget $nerdctl_url
     tar Cxzvvf /usr/local/bin $nerdctl_targz

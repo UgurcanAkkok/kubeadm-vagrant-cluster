@@ -4,7 +4,7 @@ set -xe -o pipefail
 ### This script follows the https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 ### to install kubeadm and relavent packages.
 
-kubernetes_version="1.31"
+kubernetes_version="1.33"
 
 # Get the signing key
 mkdir -p -m 755 /etc/apt/keyrings
