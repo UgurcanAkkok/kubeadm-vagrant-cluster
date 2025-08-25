@@ -19,6 +19,8 @@ You are always welcome to open any issues or pull requests!
 You should always read the relavent documentations and you may possibly use this repository to ease your process of deploying a kubernetes cluster at home.
 
 - First you should go through everything in the repo and edit the scripts according to your system and needs.
+  - Note that on Arch Linux, you might need to add this line `/etc/libvirt/network.conf` to `firewall_backend = "iptables"` If you run into any issues with VM networking.
+  - If you want to authenticate to libvirt without requiring sudo password, add yourself to the libvirt linux group.
 - Then you need to do a `vagrant up` and initialize the vms.
 - Enter into the node-1 vm using `vagrant ssh`. If you use the vagrant shared folder feature, there should be the scripts in `/vagrant/` folder. You can start a tmux session.
 - After this point, it is pretty straight-forward. You will run the scripts according to the following order and check the output.
