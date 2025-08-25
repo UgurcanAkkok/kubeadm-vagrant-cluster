@@ -24,6 +24,13 @@ nerdctl_version="2.1.3"
 nerdctl_url="https://github.com/containerd/nerdctl/releases/download/v${nerdctl_version}/nerdctl-${nerdctl_version}-linux-${arch}.tar.gz"
 nerdctl_targz="nerdctl-${nerdctl_version}-linux-${arch}.tar.gz"
 
+check_root() {
+  if [ "$UID" != "0" ]; then
+    echo "You need to be root"
+    exit 1
+  fi
+}
+
 install_containerd() {
   if ! command -v containerd &>/dev/null; then
     cd $(mktemp -d)
@@ -80,6 +87,7 @@ install_nerdctl() {
   fi
 }
 
+check_root
 install_containerd
 install_runc
 install_cni

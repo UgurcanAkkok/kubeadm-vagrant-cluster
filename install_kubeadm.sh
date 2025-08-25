@@ -6,6 +6,11 @@ set -xe -o pipefail
 
 kubernetes_version="1.33"
 
+if [ "$UID" != "0" ]; then
+  echo "You need to be root"
+  exit 1
+fi
+
 # Get the signing key
 mkdir -p -m 755 /etc/apt/keyrings
 curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${kubernetes_version}/deb/Release.key" | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
