@@ -8,6 +8,7 @@ fi
 
 echo "Disabling swap."
 swapoff -a
+sed -i '/swap/ d' /etc/fstab
 
 if [ "$HOSTNAME" == "node-1" ]; then
   NODE_IP="$(hostname -I)"
